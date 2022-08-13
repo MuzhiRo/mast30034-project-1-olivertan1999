@@ -18,23 +18,21 @@ def preprocess(sdf):
     # Filter outliers
     filtered_sdf = filter_data(features_extracted_sdf)
     
-    return sdf
+    return filtered_sdf
 
-def transform_daily_demand(sdf):
-    """Group data by location and date and count the number of records."""
+def transform_demand(sdf, time_format='date'):
+    """Group data by location and time format and count the number of records."""
     
-    # Aggregate and count number of daily instances in each location id
-    pickup_daily_demand = sdf.groupBy("pu_location_id", "pickup_date").count()
-    dropoff_daily_demand = sdf.groupBy("do_location_id", "dropoff_date").count()
+    if time_format == 'date':
+        # Aggregate and count number of daily instances in each location id
+        pickup_demand = sdf.groupBy("pu_location_id", "pickup_date").count()
+        dropoff_demand = sdf.groupBy("do_location_id", "dropoff_date").count()
+        
+    elif time_format == 'hour':
+        # Aggregate and count number of hourly instances in each location id
+        pickup_demand = sdf.groupBy("pu_location_id", "pickup_date", "pickup_hour").count()
+        dropoff_demand = sdf.groupBy("do_location_id", "dropoff_date", "dropoff_hour").count()
     
-    return pickup_daily_demand, dropoff_daily_demand
     
+    return pickup_demand, dropoff_demand
     
-def transform_hourly_demand(sdf):
-    """Group data by location, date and hour and count the number of records."""
-    
-    # Aggregate and count number of hourly instances in each location id
-    pickup_hourly_demand = sdf.groupBy("pu_location_id", "pickup_date", "pickup_hour").count()
-    dropoff_hourly_demand = sdf.groupBy("do_location_id", "dropoff_date", "dropoff_hour").count()
-    
-    return pickup_hourly_demand, dropoff_hourly_demand
