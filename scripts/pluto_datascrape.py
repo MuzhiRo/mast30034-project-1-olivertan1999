@@ -98,7 +98,8 @@ def get_merged_zone_data(sf, zone):
     # Rename columns for consistency
     sjoined_df = sjoined_df.rename({'OBJECTID':'object_id',
                                     'LocationID':'location_id',
-                                    'borough_right':'borough'})
+                                    'borough_right':'borough'},
+                                   axis=1)
     
     return sjoined_df
 
