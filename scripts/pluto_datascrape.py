@@ -61,6 +61,8 @@ def retrieve_pluto_data():
                                'non_residential_units',
                                'total_units',
                                'zipcode',
+                               'latitude',
+                               'longitude',
                                'geometry']]
 
 
