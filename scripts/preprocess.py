@@ -1,3 +1,4 @@
+import os
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as func
 import shapefile as shp
@@ -34,6 +35,8 @@ def transform_demand(sdf, time_format='date'):
         # Aggregate and count number of hourly instances in each location id
         pickup_demand = sdf.groupBy("pu_location_id", "pickup_date", "pickup_hour").count()
         dropoff_demand = sdf.groupBy("do_location_id", "dropoff_date", "dropoff_hour").count()
+        
+    
     
     
     return pickup_demand, dropoff_demand

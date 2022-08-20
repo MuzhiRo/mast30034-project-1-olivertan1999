@@ -7,12 +7,12 @@ def retrieve_pluto_data():
     """Retrieve and preprocess the PLUTO dataset."""
 
     # Access NYC Open Data Api
-    app_token = 'UMXzWyQUIWIjSyhP5AKzUew4x'
+    APP_TOKEN = 'UMXzWyQUIWIjSyhP5AKzUew4x'
 
-    client = Socrata("data.cityofnewyork.us", app_token)
+    client = Socrata("data.cityofnewyork.us", APP_TOKEN)
     
     # Retrieve the latest PLUTO data 
-    query = """
+    QUERY = """
     SELECT
         borough, 
         landuse, 
@@ -28,7 +28,7 @@ def retrieve_pluto_data():
     LIMIT 1000000
     """
 
-    results = client.get("64uk-42ks", query=query)
+    results = client.get("64uk-42ks", query=QUERY)
     
     # Read result and convert to geopandas dataframe format
     results_df = pd.DataFrame.from_records(results)
@@ -44,7 +44,7 @@ def retrieve_pluto_data():
     # Convert the UnitsTotal and UnitsRes to numeric
     results_gdf[['UnitsTotal', 'UnitsRes']] = results_gdf[['UnitsTotal', 'UnitsRes']].apply(pd.to_numeric)
     
-    results_gdf['non_residential_units'] = results_gdf['UnitsTotal'] - results_gdf['UnitsRes']
+#     results_gdf['non_residential_units'] = results_gdf['UnitsTotal'] - results_gdf['UnitsRes']
     
     # Rename columns for consistency
     results_gdf.rename({'UnitsRes':'residential_units',
@@ -55,10 +55,8 @@ def retrieve_pluto_data():
 
     # Reorder columns and drop irrelevant columns
     results_gdf = results_gdf[['borough',
-                               'landuse',
                                'building_class',
                                'residential_units',
-                               'non_residential_units',
                                'total_units',
                                'zipcode',
                                'latitude',
@@ -102,6 +100,7 @@ def get_merged_zone_data(sf, zone):
                                     'LocationID':'location_id',
                                     'borough_right':'borough'},
                                    axis=1)
+    
     
     return sjoined_df
 
