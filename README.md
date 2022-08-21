@@ -21,9 +21,12 @@ Remember, we will be reading through and running your code, so it is in _your be
 ## README example
 This is an example `README.md` for students to use. **Please change this to your requirements**.
 
-**Research Goal:** My research goal is tip analysis for credit card payments
+**Research Goal:** My research goal is to predict the hourly demand for taxi rides in New York City.
 
-**Timeline:** The timeline for the research area is 2018 - 2021.
+**Timeline:** The timeline for the research area is 2021-10 to 2022-04
+
+Before running any files, ensure that you have:
+1. Downloaded the Zone files (link [here]{https://d37ci6vzurychx.cloudfront.net/misc/taxi_zones.zip}) and placed the `taxi_zone' folder under the data/raw/ directory.
 
 To run the pipeline, please visit the `scripts` directory and run the files in order:
 1. `download.py`: This downloads the raw data into the `data/raw` directory.
