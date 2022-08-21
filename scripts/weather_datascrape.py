@@ -16,7 +16,7 @@
 # ### Data dictionary:
 # - Can be retrieved from this link: [FEDERAL CLIMATE COMPLEX DATA DOCUMENTATION FOR INTEGRATED SURFACE DATA](https://www.ncei.noaa.gov/data/global-hourly/doc/isd-format-document.pdf) 
 
-# In[1]:
+# In[13]:
 
 
 import requests
@@ -29,40 +29,40 @@ import datetime as dt
 # STATION_ID = 'GHCND:USW00094728'
 
 
-# In[2]:
+# In[14]:
 
 
 df2021 = pd.read_csv("https://www.ncei.noaa.gov/data/global-hourly/access/2021/72505394728.csv")
 df2022 = pd.read_csv("https://www.ncei.noaa.gov/data/global-hourly/access/2022/72505394728.csv")
 
 
-# In[17]:
+# In[15]:
 
 
 df = pd.concat([df2021, df2022])
 
 
-# In[18]:
+# In[16]:
 
 
 print(f"Number of instances: {len(df)}")
 print(f"Number of features : {len(df.columns)}")
 
 
-# In[21]:
+# In[17]:
 
 
 # Narrow down to the required period
 df = df[(df['DATE'] >= '2021-10-01') & (df['DATE'] < '2022-05-01')]
 
 
-# In[23]:
+# In[18]:
 
 
 print(f"Number of instances within required period: {len(df)}")
 
 
-# In[8]:
+# In[22]:
 
 
 def preprocess(hourly_data):
@@ -99,47 +99,48 @@ def preprocess(hourly_data):
     processed_data.rename({'WND':'wind_speed',
                            'TMP':'temperature',
                            'DEW':'dew_point',
-                           'SLP':'atmospheric_pressure'})
+                           'SLP':'atmospheric_pressure'},
+                           axis=1,
+                           inplace=True)
     
     
     return processed_data[['date',
                            'hour',
-                           'TMP',
-                           'DEW',
-                           'SLP',
-                           'AA1']]
+                           'temperature',
+                           'dew_point',
+                           'atmospheric_pressure']]
     
 
 
-# In[9]:
+# In[23]:
 
 
 print(f"Number of instances we require: {(31+30+31+31+28+31+30)*24}")
 
 
-# In[10]:
+# In[24]:
 
 
 df2 = preprocess(df)
 
 
-# In[12]:
+# In[25]:
 
 
 print(f"Number of instances after preprocessing: {len(df2)}")
 
 
-# In[254]:
+# In[26]:
+
+
+df2
+
+
+# In[27]:
 
 
 # Store the data in the curated folder
 df2.to_csv("../data/curated/hourly_weather.csv")
-
-
-# In[253]:
-
-
-df2
 
 
 # In[ ]:
