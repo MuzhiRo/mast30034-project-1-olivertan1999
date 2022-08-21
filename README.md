@@ -1,4 +1,4 @@
-# MAST30034 Project 1 README.md
+# MAST30034 Project 1 README
 - Name: Ming Hui Tan
 - Student ID: 1087948
 
