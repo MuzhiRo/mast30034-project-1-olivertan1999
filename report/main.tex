@@ -144,6 +144,7 @@ For the TLC Trip Record Data, we extracted the pick-up date and hour into indivi
 With the processed PLUTO data set, we aggregated the data based on location ID and counted the number of buildings based on their building classes in that region. We then included this information in the TLC Zone data set such that for each location ID in the TLC Zone data set, there are columns for each building class that detail the number of building under that specified class. Finally, we joined the modified TLC Zone data set with the TLC Trip Record Data using inner join on location ID. We also merged the resulting data set with the Integrated Surface data set on date and hour.
 
 \section{Preliminary Analysis}
+\label{analysis}
 In this section, we explored the features in TLC data set individually as well as their relationship with the PLUTO and weather data sets. 
 
 \subsection{Distribution of Pick-ups Demand}
@@ -189,7 +190,7 @@ Out of all 24 building classes, only the `Hotel' building class exhibits a visib
     \includegraphics[width=5in, height=3in]{plots/hotel_on_pickup.png}
 
     \caption{Average Daily Demand for Taxi by Number of Hotels in the Pick-up Location in NYC.}
-    \label{fig:label1}
+    \label{fig:hotel_trend}
 \end{figure}
 
 
@@ -209,46 +210,8 @@ The RFR is a supervised learning algorithm that aggregates multiple decision tre
 To tune the hyperparameters of our RFR model, we ran a cross-validated grid search on a set of parameters with the entire training data to approximate the most optimal configurations for the model for each borough. We were unable to run the grid search individually on each borough's model due to limited computational time.
 
 \section{Results and Discussion}
-To evaluate our models, we used the Root Mean Squared Error (RMSE) as our loss metric since it is highly interpretable and it allows us to contextualise the errors of the models and their implications in predicting future taxi demand. Table \ref{Table2} demonstrates the performance of the model based on each borough in NYC.
+To evaluate our models, we used the Root Mean Squared Error (RMSE) as our loss metric since it is highly interpretable and it allows us to contextualise the errors of the models and their implications in predicting future taxi demand. Table 2 demonstrates the performance of the model based on each borough in NYC.
 
-% \begin{minipage}{\textwidth}
-% \begin{minipage}
-% \begin{tabular}{lcc}
-%     \toprule
-%     \multirow{3}{*}{} &
-%       \multicolumn{2}{c}{\bf RMSE} \\
-%       \cmidrule(lr){1-3}
-%       \bf Borough & \bf LR & \bf {RFR} \\
-%       \midrule
-%     Manhattan & {46.26} & {\bf 20.46} \\
-%     \hline
-%     Queens & {34.25} &  \bf 16.09 \\
-%     \hline
-%     Brooklyn & { 1.80} & \bf 1.59 \\
-%     \hline
-%     Bronx &  {\bf 0.58} & \bf 0.58\\
-%     \hline
-%     Staten Island &  {1.49} & \bf 1.46\\
-%     \hline
-%     EWR &  {\bf15.48} & 16.69\\
-%     \bottomrule
-    
-%   \end{tabular}
-%     \captionof{table}{A table beside a figure}
-%       \end{minipage}
-%   \begin{minipage}[b]{0.49\textwidth}
-%     \centering
-%     \includegraphics[width=3in, height=2
-%     in]{plots/predicted_trend.png}
-%     \captionof{figure}{A table beside a figure}
-%   \end{minipage}
-%   \hfill
-%   \begin{minipage}[b]{0.49\textwidth}
-%     \centering
-    
-    
-%   \end{minipage}
-%   \end{minipage}
 \vspace{0.5cm}
 \begin{minipage}{\textwidth}
   \begin{minipage}[b]{0.5\textwidth}
@@ -297,7 +260,6 @@ On the other hand, RFR showed consistent performance in predicting hourly taxi d
 
 Both models seemed to overestimate the number of pickups before 8 am, while underestimating the demand during peak hours (10 am - 6 pm). However, considering the low RMSE of RFR, the model will still be effective in predicting the general hourly demand for taxi in various locations in NYC. LR, however, showed signs of overfitting and high RMSE, suggesting that the model might not be suitable for the task.
 
-\label{analysis}
 
 \section{Recommendations}
 Based on our model evaluation, we can clearly see that the RFR model is very effective in estimating the hourly demand for taxi rides in NYC with an average error of only about 20 trips in Manhattan and much less for other boroughs. Considering the hourly demand can reach up to 900+ in popular destinations in Manhattan, this puts in perspective on how low the average error is and overall how accurate the model is.
