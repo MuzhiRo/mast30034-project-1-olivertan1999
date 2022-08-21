@@ -11,6 +11,8 @@ Before running any files, ensure that you have:
 
 Then:
 2. Run all cells in `Weather datascrape.ipynb' to retrieve hourly weather data.
+
 3. Run all cells in `EDA.ipynb' to retrieve preprocessed data and output them in data/curated for modelling. (This may take a while)
+
 4. Run `model.ipynb' to train and test the regression models on the preprocessed data.
 
